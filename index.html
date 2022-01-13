@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Encryption</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+  </head>
+  <body>
+    <form class="form-signin" method="post" name="signin" id="signin">
+      <input
+        name="password"
+        type= 'password'
+        id="password"
+        placeholder="Password"
+        id="password"
+        value=""
+        class="form-control"
+      />
+      <input type="hidden" name="hide" id="hide" class="form-control"/>
+      <div style="color: red" id="err"></div>
+      <div style="color: green" id="hashedValue"></div>
+      <input
+        type="submit"
+        name="login"
+        value="LOGIN"
+        id="login"
+        class="form-control"
+      />
+    </form>
+    <script>
+        const sub = document.getElementById('login')
+        sub.addEventListener('click', (e)=>{
+            return encrypt(e)
+        })
+        function encrypt(e){
+            e.preventDefault()
+            const password = document.getElementById('password')
+            const hiddenPassword = document.getElementById('hide')
+            const errDiv = document.getElementById('err')
+            const hashedDiv = document.getElementById('hashedValue')
+
+            errDiv.innerHTML=""
+            hashedDiv.innerHTML=""
+            if(password.value === ""){
+                errDiv.innerHTML="Alert : Password missing"
+                return false
+            }else{
+                hiddenPassword.value = password.value
+                const hashedPassword = CryptoJS.MD5(password.value)
+                hashedDiv.innerHTML = `Your password ${password.value} encrypted to ${hashedPassword}`
+                password.value = hashedPassword
+                return true
+            }
+
+        }
+    </script>
+  </body>
+</html>
